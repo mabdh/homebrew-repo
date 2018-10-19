@@ -5,15 +5,15 @@ class Python36 < Formula
   sha256 "d79bc15d456e73a3173a2938f18a17e5149c850ebdedf84a78067f501ee6e16f"
   revision 1
 
+  # bottle do
+  #   sha256 "1bc5a2d3f0a8602bf2f46de7c43fcb6dde4f110c0f4518d4e802cb1f733a43de" => :high_sierra
+  #   sha256 "131d39120ac6ca2f21bf231de7414c08916cea472bc5219e0bcb49541f77cb9f" => :sierra
+  #   sha256 "b2584ea6f16c47fe3795745e9cae5a7762f750aa78c15cbe14736dcd2602b755" => :el_capitan
+  # end
 
   devel do
     url "https://www.python.org/ftp/python/3.6.7/Python-3.6.7rc1.tar.xz"
     sha256 "d664a2e122b9f587429eeb9d763ecec21d05d5db98c07a231159c522e1c007a4"
-
-    resource "blurb" do
-      url "https://files.pythonhosted.org/packages/29/4f/268f9aa095cbcf53253c665fd0f5103f22dccf246fe317ab9c5c481b38f5/blurb-1.0.7.tar.gz"
-      sha256 "1849eb2c9ceb74928d24eab847d344a8602e8ee822aeba2e930c4e6c7543e9e4"
-    end
   end
 
   head do
@@ -40,11 +40,6 @@ class Python36 < Formula
   skip_clean "bin/pip3", "bin/pip-3.4", "bin/pip-3.5", "bin/pip-3.6"
   skip_clean "bin/easy_install3", "bin/easy_install-3.4", "bin/easy_install-3.5", "bin/easy_install-3.6"
 
-  fails_with :clang do
-    build 425
-    cause "https://bugs.python.org/issue24844"
-  end
-
   resource "setuptools" do
     url "https://files.pythonhosted.org/packages/6e/9c/6a003320b00ef237f94aa74e4ad66c57a7618f6c79d67527136e2544b728/setuptools-40.4.3.zip"
     sha256 "acbc5740dd63f243f46c2b4b8e2c7fd92259c2ddb55a4115b16418a2ed371b15"
@@ -58,6 +53,11 @@ class Python36 < Formula
   resource "wheel" do
     url "https://files.pythonhosted.org/packages/68/f0/545cbeae75f248c4ad7c2d062672cd7e046dd325a81b74fc02c62450d133/wheel-0.32.0.tar.gz"
     sha256 "a26bc27230baaec9039972b7cb43db94b17c13e4d66a9ff6a4d46a0344c55c9a"
+  end
+
+  fails_with :clang do
+    build 425
+    cause "https://bugs.python.org/issue24844"
   end
 
   # Homebrew's tcl-tk is built in a standard unix fashion (due to link errors)
@@ -102,16 +102,12 @@ class Python36 < Formula
     ldflags  = []
     cppflags = []
 
-    if MacOS.sdk_path_if_needed
+    unless MacOS::CLT.installed?
       # Help Python's build system (setuptools/pip) to build things on Xcode-only systems
       # The setup.py looks at "-isysroot" to get the sysroot (and not at --sysroot)
       cflags   << "-isysroot #{MacOS.sdk_path}"
       ldflags  << "-isysroot #{MacOS.sdk_path}"
       cppflags << "-I#{MacOS.sdk_path}/usr/include" # find zlib
-
-      if DevelopmentTools.clang_build_version < 1000
-        cflags  << "-I/usr/include"
-      end
       # For the Xlib.h, Python needs this header dir with the system Tk
       if build.without? "tcl-tk"
         cflags << "-I#{MacOS.sdk_path}/System/Library/Frameworks/Tk.framework/Versions/8.5/Headers"
@@ -165,7 +161,7 @@ class Python36 < Formula
       system "make", "frameworkinstallextras", "PYTHONAPPSDIR=#{pkgshare}"
     end
 
-    # Any .app get a " 36" attached, so it does not conflict with python 2.x.
+    # Any .app get a " 3" attached, so it does not conflict with python 2.x.
     Dir.glob("#{prefix}/*.app") { |app| mv app, app.sub(/\.app$/, " 36.app") }
 
     # Prevent third-party packages from building against fragile Cellar paths
@@ -204,7 +200,7 @@ class Python36 < Formula
       if build.head?
         system bin/"python36", "-m", "venv", "./venv"
         resource("blurb").stage do
-          system buildpath/"Doc/venv/bin/python36", "-m", "pip", "install", "-v",
+          system buildpath/"Doc/venv/bin/python3", "-m", "pip", "install", "-v",
                  "--no-deps", "--no-binary", ":all", "--ignore-installed", "."
         end
       end
@@ -342,7 +338,7 @@ class Python36 < Formula
     if prefix.exist?
       xy = (prefix/"Frameworks/Python.framework/Versions").children.min.basename.to_s
     else
-      xy = version.to_s.slice(/(3\.\d)/) || "36"
+      xy = version.to_s.slice(/(3\.\d)/) || "3.6"
     end
     text = <<~EOS
       Python has been installed as
@@ -379,7 +375,7 @@ class Python36 < Formula
     # Check if some other modules import. Then the linked libs are working.
     system "#{bin}/python#{xy}", "-c", "import tkinter; root = tkinter.Tk()"
     system "#{bin}/python#{xy}", "-c", "import _gdbm"
-    system bin/"pip3", "list", "--format=columns"
+    system bin/"pip36", "list", "--format=columns"
   end
 end
 
