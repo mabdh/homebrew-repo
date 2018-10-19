@@ -342,16 +342,16 @@ class PythonAT36 < Formula
     end
     text = <<~EOS
       Python has been installed as
-        #{HOMEBREW_PREFIX}/bin/python3
+        #{HOMEBREW_PREFIX}/bin/python3.6
       Unversioned symlinks `python`, `python-config`, `pip` etc. pointing to
-      `python3`, `python3-config`, `pip3` etc., respectively, have been installed into
+      `python3.6`, `python3.6-config`, `pip3.6` etc., respectively, have been installed into
         #{opt_libexec}/bin
       If you need Homebrew's Python 2.7 run
         brew install python@2
       Pip, setuptools, and wheel have been installed. To update them run
-        pip3 install --upgrade pip setuptools wheel
+        pip3.6 install --upgrade pip setuptools wheel
       You can install Python packages with
-        pip3 install <package>
+        pip3.6 install <package>
       They will install into the site-package directory
         #{HOMEBREW_PREFIX/"lib/python#{xy}/site-packages"}
       See: https://docs.brew.sh/Homebrew-and-Python
@@ -375,7 +375,7 @@ class PythonAT36 < Formula
     # Check if some other modules import. Then the linked libs are working.
     system "#{bin}/python#{xy}", "-c", "import tkinter; root = tkinter.Tk()"
     system "#{bin}/python#{xy}", "-c", "import _gdbm"
-    system bin/"pip3", "list", "--format=columns"
+    system bin/"pip3.6", "list", "--format=columns"
   end
 end
 

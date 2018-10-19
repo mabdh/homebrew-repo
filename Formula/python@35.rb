@@ -17,15 +17,6 @@ class PythonAT35 < Formula
     sha256 "4c35156190e66eb71992f3db210c719f7debd2db89e57d80aaaa03f8750f8d5f"
   end
 
-  head do
-    url "https://github.com/python/cpython.git"
-
-    resource "blurb" do
-      url "https://files.pythonhosted.org/packages/29/4f/268f9aa095cbcf53253c665fd0f5103f22dccf246fe317ab9c5c481b38f5/blurb-1.0.7.tar.gz"
-      sha256 "1849eb2c9ceb74928d24eab847d344a8602e8ee822aeba2e930c4e6c7543e9e4"
-    end
-  end
-
   option "with-tcl-tk", "Use Homebrew's Tk instead of macOS Tk (has optional Cocoa and threads support)"
   deprecated_option "with-brewed-tk" => "with-tcl-tk"
 
@@ -164,7 +155,7 @@ class PythonAT35 < Formula
     end
 
     # Any .app get a " 36" attached, so it does not conflict with python 2.x.
-    Dir.glob("#{prefix}/*.app") { |app| mv app, app.sub(/\.app$/, " 3.5.app") }
+    Dir.glob("#{prefix}/*.app") { |app| mv app, app.sub(/\.app$/, " 3.app") }
 
     # Prevent third-party packages from building against fragile Cellar paths
     inreplace Dir[lib_cellar/"**/_sysconfigdata_m_darwin_darwin.py",
@@ -200,9 +191,9 @@ class PythonAT35 < Formula
 
     cd "Doc" do
       if build.head?
-        system bin/"python3.5", "-m", "venv", "./venv"
+        system bin/"python3", "-m", "venv", "./venv"
         resource("blurb").stage do
-          system buildpath/"Doc/venv/bin/python3.5", "-m", "pip", "install", "-v",
+          system buildpath/"Doc/venv/bin/python3", "-m", "pip", "install", "-v",
                  "--no-deps", "--no-binary", ":all", "--ignore-installed", "."
         end
       end
@@ -213,10 +204,10 @@ class PythonAT35 < Formula
 
     # Install unversioned symlinks in libexec/bin.
     {
-      "idle" => "idle3.5",
-      "pydoc" => "pydoc3.5",
-      "python" => "python3.5",
-      "python-config" => "python3.5-config",
+      "idle" => "idle3",
+      "pydoc" => "pydoc3",
+      "python" => "python3",
+      "python-config" => "python3-config",
     }.each do |unversioned_name, versioned_name|
       (libexec/"bin").install_symlink (bin/versioned_name).realpath => unversioned_name
     end
@@ -253,7 +244,7 @@ class PythonAT35 < Formula
 
     %w[setuptools pip wheel].each do |pkg|
       (libexec/pkg).cd do
-        system bin/"python3.5", "-s", "setup.py", "--no-user-cfg", "install",
+        system bin/"python3", "-s", "setup.py", "--no-user-cfg", "install",
                "--force", "--verbose", "--install-scripts=#{bin}",
                "--install-lib=#{site_packages}",
                "--single-version-externally-managed",
@@ -262,19 +253,19 @@ class PythonAT35 < Formula
     end
 
     rm_rf [bin/"pip", bin/"easy_install"]
-    mv bin/"wheel", bin/"wheel3.5"
+    mv bin/"wheel", bin/"wheel3"
 
     # Install unversioned symlinks in libexec/bin.
     {
       "easy_install" => "easy_install-#{xy}",
-      "pip" => "pip3.5",
-      "wheel" => "wheel3.5",
+      "pip" => "pip3",
+      "wheel" => "wheel3",
     }.each do |unversioned_name, versioned_name|
       (libexec/"bin").install_symlink (bin/versioned_name).realpath => unversioned_name
     end
 
     # post_install happens after link
-    %W[pip3.5 pip#{xy} easy_install-#{xy} wheel3.5].each do |e|
+    %W[pip3 pip#{xy} easy_install-#{xy} wheel3].each do |e|
       (HOMEBREW_PREFIX/"bin").install_symlink bin/e
     end
 
@@ -344,7 +335,7 @@ class PythonAT35 < Formula
     end
     text = <<~EOS
       Python has been installed as
-        #{HOMEBREW_PREFIX}/bin/python3
+        #{HOMEBREW_PREFIX}/bin/python3.5
       Unversioned symlinks `python`, `python-config`, `pip` etc. pointing to
       `python3.5`, `python3.5-config`, `pip3.5` etc., respectively, have been installed into
         #{opt_libexec}/bin
