@@ -1,4 +1,4 @@
-class Python3.6 < Formula
+class Python36 < Formula
   desc "Interpreted, interactive, object-oriented programming language"
   homepage "https://www.python.org/"
   url "https://www.python.org/ftp/python/3.6.6/Python-3.6.6.tar.xz"
@@ -342,7 +342,7 @@ class Python3.6 < Formula
     if prefix.exist?
       xy = (prefix/"Frameworks/Python.framework/Versions").children.min.basename.to_s
     else
-      xy = version.to_s.slice(/(3\.\d)/) || "3.6"
+      xy = version.to_s.slice(/(3\.\d)/) || "36"
     end
     text = <<~EOS
       Python has been installed as
