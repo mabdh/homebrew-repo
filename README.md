@@ -1,1 +1,1 @@
-# homebrew-other-version
+# homebrew-repo

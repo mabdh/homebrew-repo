@@ -6,11 +6,10 @@ class PythonAT35 < Formula
   sha256 "f55cde04f521f273c7cba08912921cc5642cfc15ca7b22d5829f0aff4371155f"
   revision 1
 
-  # bottle do
-  #   sha256 "1bc5a2d3f0a8602bf2f46de7c43fcb6dde4f110c0f4518d4e802cb1f733a43de" => :high_sierra
-  #   sha256 "131d39120ac6ca2f21bf231de7414c08916cea472bc5219e0bcb49541f77cb9f" => :sierra
-  #   sha256 "b2584ea6f16c47fe3795745e9cae5a7762f750aa78c15cbe14736dcd2602b755" => :el_capitan
-  # end
+  bottle do
+    root_url "https://homebrew.bintray.com/bottles-repo"
+    sha256 "488a589c675caf599b48d089f7eed9c5b55383c08fc585ff797a4d1be140e475" => :mojave
+  end
 
   devel do
     url "https://www.python.org/ftp/python/3.5.6/Python-3.5.6rc1.tar.xz"
