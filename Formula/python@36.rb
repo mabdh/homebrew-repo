@@ -163,7 +163,7 @@ class PythonAT36 < Formula
     end
 
     # Any .app get a " 3" attached, so it does not conflict with python 2.x.
-    Dir.glob("#{prefix}/*.app") { |app| mv app, app.sub(/\.app$/, " 3.app") }
+    Dir.glob("#{prefix}/*.app") { |app| mv app, app.sub(/\.app$/, " 36.app") }
 
     # Prevent third-party packages from building against fragile Cellar paths
     inreplace Dir[lib_cellar/"**/_sysconfigdata_m_darwin_darwin.py",
@@ -197,11 +197,22 @@ class PythonAT36 < Formula
       (libexec/r).install resource(r)
     end
 
+    # autoremove conflicted symlinks
+    bin_file_path = prefix/"bin"
+    File.delete(bin_file_path/"2to3") if File.exist?(bin_file_path/"2to3")
+    File.delete(bin_file_path/"idle3") if File.exist?(bin_file_path/"idle3")
+    File.delete(bin_file_path/"python3") if File.exist?(bin_file_path/"python3")
+    File.delete(bin_file_path/"pydoc3") if File.exist?(bin_file_path/"pydoc3")
+    File.delete(bin_file_path/"python3-config") if File.exist?(bin_file_path/"python3-config")
+    File.delete(bin_file_path/"pyvenv") if File.exist?(bin_file_path/"pyvenv")
+    File.delete(prefix/"share/man/man1/python3.1") if File.exist?(prefix/"share/man/man1/python3.1")
+    File.delete(prefix/"lib/pkgconfig/python3.pc") if File.exist?(prefix/"lib/pkgconfig/python3.pc")
+
     cd "Doc" do
       if build.head?
-        system bin/"python3", "-m", "venv", "./venv"
+        system bin/"python3.6", "-m", "venv", "./venv"
         resource("blurb").stage do
-          system buildpath/"Doc/venv/bin/python3", "-m", "pip", "install", "-v",
+          system buildpath/"Doc/venv/bin/python3.6", "-m", "pip", "install", "-v",
                  "--no-deps", "--no-binary", ":all", "--ignore-installed", "."
         end
       end
@@ -212,10 +223,10 @@ class PythonAT36 < Formula
 
     # Install unversioned symlinks in libexec/bin.
     {
-      "idle" => "idle3",
-      "pydoc" => "pydoc3",
-      "python" => "python3",
-      "python-config" => "python3-config",
+      "idle" => "idle3.6",
+      "pydoc" => "pydoc3.6",
+      "python" => "python3.6",
+      "python-config" => "python3.6-config",
     }.each do |unversioned_name, versioned_name|
       (libexec/"bin").install_symlink (bin/versioned_name).realpath => unversioned_name
     end
@@ -252,7 +263,7 @@ class PythonAT36 < Formula
 
     %w[setuptools pip wheel].each do |pkg|
       (libexec/pkg).cd do
-        system bin/"python3", "-s", "setup.py", "--no-user-cfg", "install",
+        system bin/"python3.6", "-s", "setup.py", "--no-user-cfg", "install",
                "--force", "--verbose", "--install-scripts=#{bin}",
                "--install-lib=#{site_packages}",
                "--single-version-externally-managed",
@@ -261,21 +272,25 @@ class PythonAT36 < Formula
     end
 
     rm_rf [bin/"pip", bin/"easy_install"]
-    mv bin/"wheel", bin/"wheel3"
+    mv bin/"wheel", bin/"wheel3.6"
 
     # Install unversioned symlinks in libexec/bin.
     {
       "easy_install" => "easy_install-#{xy}",
-      "pip" => "pip3",
-      "wheel" => "wheel3",
+      "pip" => "pip3.6",
+      "wheel" => "wheel3.6",
     }.each do |unversioned_name, versioned_name|
       (libexec/"bin").install_symlink (bin/versioned_name).realpath => unversioned_name
     end
 
     # post_install happens after link
-    %W[pip3 pip#{xy} python#{xy} easy_install-#{xy} wheel3].each do |e|
+    %W[pip3 pip#{xy} easy_install-#{xy} wheel3].each do |e|
       (HOMEBREW_PREFIX/"bin").install_symlink bin/e
     end
+    # %W[pip#{xy} python#{xy} easy_install-#{xy} wheel#{xy}].each do |e|
+    #   print bin.realpath
+    #   (HOMEBREW_PREFIX/"bin").install_symlink bin/e
+    # end
 
     # Help distutils find brewed stuff when building extensions
     include_dirs = [HOMEBREW_PREFIX/"include", Formula["openssl"].opt_include,
@@ -339,7 +354,8 @@ class PythonAT36 < Formula
     if prefix.exist?
       xy = (prefix/"Frameworks/Python.framework/Versions").children.min.basename.to_s
     else
-      xy = version.to_s.slice(/(3\.\d)/) || "3.6"
+      # xy = version.to_s.slice(/(3\.\d)/) || "3.6"
+      xy = "3.6"
     end
     text = <<~EOS
       Python has been installed as
