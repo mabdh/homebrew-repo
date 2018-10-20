@@ -6,7 +6,7 @@ class PythonAT36 < Formula
   revision 1
 
   bottle do
-    root_url "https://raw.githubusercontent.com/mabdh/homebrew-repo-bottles/master"
+    root_url "https://github.com/mabdh/homebrew-repo-bottles/blob/master"
     sha256 "46d662167cd9e6cc8c14f779449ef4e918cf241b27a714744b410e0c77e67107" => :mojave
   end
 
