@@ -264,7 +264,7 @@ class PythonAT35 < Formula
     end
 
     # post_install happens after link
-    %W[pip3 pip#{xy} easy_install-#{xy} wheel3].each do |e|
+    %W[pip3 pip#{xy} python#{xy} easy_install-#{xy} wheel3].each do |e|
       (HOMEBREW_PREFIX/"bin").install_symlink bin/e
     end
 
