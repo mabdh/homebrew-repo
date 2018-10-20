@@ -6,10 +6,10 @@ class PythonAT35 < Formula
   sha256 "f55cde04f521f273c7cba08912921cc5642cfc15ca7b22d5829f0aff4371155f"
   revision 1
 
-  bottle do
-    root_url "https://github.com/mabdh/homebrew-repo-bottles/blob/master"
-    sha256 "6727c942d4d4df55ae8a6f0e6c6d4326e9435c66c32fbe1cbb87960e7e4bd614" => :mojave
-  end
+  # bottle do
+  #   root_url "https://github.com/mabdh/homebrew-repo-bottles/blob/master"
+  #   sha256 "6727c942d4d4df55ae8a6f0e6c6d4326e9435c66c32fbe1cbb87960e7e4bd614" => :mojave
+  # end
 
   devel do
     url "https://www.python.org/ftp/python/3.5.6/Python-3.5.6rc1.tar.xz"
