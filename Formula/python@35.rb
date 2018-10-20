@@ -8,7 +8,7 @@ class PythonAT35 < Formula
 
   bottle do
     root_url "https://github.com/mabdh/homebrew-repo-bottles/blob/master"
-    sha256 "488a589c675caf599b48d089f7eed9c5b55383c08fc585ff797a4d1be140e475" => :mojave
+    sha256 "6727c942d4d4df55ae8a6f0e6c6d4326e9435c66c32fbe1cbb87960e7e4bd614" => :mojave
   end
 
   devel do
