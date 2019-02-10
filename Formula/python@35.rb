@@ -47,7 +47,7 @@ class PythonAT35 < Formula
   end
 
   fails_with :clang do
-    build 425
+    build 600
     cause "https://bugs.python.org/issue24844"
   end
 
