@@ -1,4 +1,4 @@
-class LazyConnect < Formula
+class LazySsh < Formula
   desc "Shell function to fuzzy search remote ssh address, connect to it automatically, and copy command to clipboard."
   homepage "https://github.com/mabdh/lazy-ssh"
   url "https://github.com/mabdh/lazy-ssh/archive/v0.0.2.zip"
