@@ -9,3 +9,8 @@ Install Python 3.5
 
 				brew tap mabdh/repo
 				brew install python@35
+
+Install Consul 1.5.3
+
+				brew tap mabdh/repo
+				brew install consul@15
