@@ -1,4 +1,4 @@
-class ConsulAT153 < Formula
+class ConsulAT15 < Formula
   desc "Tool for service discovery, monitoring and configuration"
   homepage "https://www.consul.io"
   url "https://github.com/hashicorp/consul.git",
