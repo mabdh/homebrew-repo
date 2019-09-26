@@ -7,12 +7,10 @@ class ConsulAT15 < Formula
   head "https://github.com/hashicorp/consul.git",
        :shallow => false
 
-  # bottle do
-  #   cellar :any_skip_relocation
-  #   sha256 "59a7bb6f11f3143312a84e602489983c40c4883a3b98ddc35d63024f31709b5f" => :mojave
-  #   sha256 "568246b8bb2f34be03184e3f85dd86aed59bdf805f08f9cee975d862106a87a6" => :high_sierra
-  #   sha256 "c0daf241f7c18b1a4e176049af8a61eabf44feb852ea817dfd32edd685d50d27" => :sierra
-  # end
+  bottle do
+    cellar :any_skip_relocation
+    sha256 "23e73f39573812be903e4130f6169e0b591395d066347a2207ce9bbae2636b81" => :mojave
+  end
 
   depends_on "go" => :build
   depends_on "gox" => :build
