@@ -1,9 +1,9 @@
 class Vautopn < Formula
   desc "Shell function to fuzzy search an IPSec VPN by name and connect to it automatically."
-  homepage "mabdh.com"
-  url "https://github.com/mabdh/vautopn/archive/v0.0.3.zip"
-  sha256 "00e50e131dcca4e76920cfa5cee2ae80e307f82a2c9d7728dddca68a3d37f7c6"
-
+  homepage "https://github.com/mabdh/vautopn"
+  url "https://github.com/mabdh/vautopn/archive/v0.0.4.zip"
+  sha256 "91bed77edbf7aa686c231137d156db35d13eff20f440be9e1f2edbd73aa5b807"
+  depends_on "oath-toolkit" => :recommended
   def install
     bin.install "vautopn"
   end
