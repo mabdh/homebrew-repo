@@ -1,8 +1,8 @@
 class Ipsvpn < Formula
   desc "Shell function to connect IPSec VPN via terminal in mac"
   homepage "https://github.com/mabdh/ips-vpn"
-  url "https://github.com/mabdh/ipsvpn/archive/v0.0.2.tar.gz"
-  sha256 "82c68c9876adf328f108be9b1c553b3c0e740391051f19eaa9668e67e954a5f9"
+  url "https://github.com/mabdh/ipsvpn/archive/v0.0.3.tar.gz"
+  sha256 "1acf3956439b030cdcfa7c681e122c3d2aa3b02ca36e098b2f925f86a6d2d6a4"
   depends_on "oath-toolkit" => :recommended
   depends_on "strongswan" => :recommended
 
