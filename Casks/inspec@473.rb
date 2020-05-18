@@ -4,7 +4,7 @@ cask 'inspec@473' do
 
   # packages.chef.io was verified as official when first introduced to the cask
   url "https://packages.chef.io/files/stable/inspec/#{version}/mac_os_x/10.14/inspec-#{version}-1.dmg"
-  # appcast "https://github.com/chef/inspec/releases.atom"
+  appcast "https://github.com/chef/inspec/releases.atom"
   name "InSpec by Chef"
   homepage "https://www.inspec.io/"
 
