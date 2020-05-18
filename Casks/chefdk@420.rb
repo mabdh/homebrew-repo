@@ -1,4 +1,4 @@
-cask "chefdk" do
+cask "chefdkAT420" do
   version "4.2.0"
   sha256 "74171bc6c662bd76c405b4c6587b8f43a4783b8439bdadb711818182fa42e1fb"
 
