@@ -1,4 +1,4 @@
-cask "chef-infra-clientAT15136" do
+class ChefInfraClientAT15136 < Formula 
   version "15.1.36"
   sha256 "757d04d45433450cbe4e240117f38a318a89db325f22fc40338cbb6eb51671e8"
 

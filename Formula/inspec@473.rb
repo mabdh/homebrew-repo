@@ -1,4 +1,4 @@
-cask "inspecAT473" do
+class InspecAT473 < Formula 
   version "4.7.3"
   sha256 "21e347ab990293ef50a08eaec6ea5471962d01e6d30bcca1ed202b81574f01aa"
 
