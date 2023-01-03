@@ -1,7 +1,9 @@
 # homebrew-repo
 
 <!-- project_table_start -->
-TABLE HERE
+| Project                                    | Description  | Install                  |
+| ------------------------------------------ | ------------ | ------------------------ |
+| [vautopn](https://github.com/mabdh/vautopn) | vautopn help goes here | `brew install vautopn` |
 <!--project_table_end -->
 
 Install Python 3.6
