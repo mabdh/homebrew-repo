@@ -1,5 +1,8 @@
 # homebrew-repo
 
+<!-- project_table_start -->
+<!--project_table_end -->
+
 Install Python 3.6
 
 				brew tap mabdh/repo
