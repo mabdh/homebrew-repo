@@ -1,4 +1,4 @@
-class PgPartman < Formula
+class PgPartmanAT47415 < Formula
   desc "Partition management extension for PostgreSQL"
   homepage "https://github.com/pgpartman/pg_partman"
   url "https://github.com/pgpartman/pg_partman/archive/refs/tags/v4.7.4.tar.gz"
