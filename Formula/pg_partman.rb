@@ -1,11 +1,9 @@
-class PgPartmanAT474 < Formula
+class PgPartman < Formula
   desc "Partition management extension for PostgreSQL"
   homepage "https://github.com/pgpartman/pg_partman"
   url "https://github.com/pgpartman/pg_partman/archive/refs/tags/v4.7.4.tar.gz"
   sha256 "e81e9b4edbd36490be6389e2a593cac9a55b1694ba84f8fd4b08df5b17d6233e"
   license "PostgreSQL"
-
-  depends_on "postgresql@15"
 
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "7179b3094d09b2b2484d6018547100bc1130b12ec7fecd1a2def8c891642c407"
@@ -19,29 +17,25 @@ class PgPartmanAT474 < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "6f17ce22ba0ff4f9204f4a53020fc3aea3383e67432d69ed6d932e8dad4091a7"
   end
   
+  depends_on "postgresql@15"
   def postgresql
     Formula["postgresql@15"]
   end
-
+  
   def install
     ENV["PG_CONFIG"] = postgresql.opt_bin/"pg_config"
-
     system "make"
-    system "make", "install", "bindir=#{bin}",
-                              "docdir=#{doc}",
-                              "datadir=#{share/postgresql.name}",
-                              "pkglibdir=#{lib/postgresql.name}"
+    (lib/postgresql.name).install "src/pg_partman_bgw.so"
+    (share/postgresql.name/"extension").install "pg_partman.control"
+    (share/postgresql.name/"extension").install Dir["sql/pg_partman--*.sql"]
+    (share/postgresql.name/"extension").install Dir["updates/pg_partman--*.sql"]
   end
-
   test do
-    ENV["LC_ALL"] = "C"
     pg_ctl = postgresql.opt_bin/"pg_ctl"
     psql = postgresql.opt_bin/"psql"
     port = free_port
-
     system pg_ctl, "initdb", "-D", testpath/"test"
     (testpath/"test/postgresql.conf").write <<~EOS, mode: "a+"
-
       shared_preload_libraries = 'pg_partman_bgw'
       port = #{port}
     EOS
